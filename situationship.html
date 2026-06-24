@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Official Decree</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+
+
+
+<style>
+
+    .flap.open{
+    transform:rotateX(180deg);
+}
+
+.letter.show{
+    animation:rise 2.5s ease forwards;
+}
+
+.envelope-wrapper{
+    cursor:pointer;
+}
+
+.click-hint{
+    position:absolute;
+    top:-60px;
+    width:100%;
+    text-align:center;
+    color:var(--gold);
+    font-size:1.4rem;
+    letter-spacing:2px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{
+        opacity:.4;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+}
+
+:root{
+    --gold:#af9b1c;
+    --gold-soft:#d2bc3f;
+    --bg:#080808;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+    radial-gradient(circle at top,#1c1c1c,#080808);
+    color:white;
+    font-family:'Cormorant Garamond',serif;
+    overflow-x:hidden;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
+
+.hero h1{
+    font-family:'Cinzel Decorative',serif;
+    font-size:clamp(3rem,10vw,8rem);
+    color:var(--gold);
+    text-shadow:
+        0 0 20px rgba(255,215,0,.6),
+        0 0 50px rgba(255,215,0,.4);
+    margin-bottom:40px;
+}
+
+.hero h2{
+    font-size:clamp(2rem,5vw,4rem);
+    font-weight:300;
+    color:white;
+}
+
+/* BODY */
+
+.section{
+    max-width:1000px;
+    margin:auto;
+    padding:150px 40px;
+}
+
+.section p{
+    font-size:1.8rem;
+    line-height:1.8;
+    text-align:justify;
+}
+
+/* FOOTER MESSAGE */
+
+.footer-message{
+    text-align:center;
+    padding:120px 20px;
+}
+
+.footer-message h2{
+    color:var(--gold);
+    font-size:clamp(2rem,5vw,4rem);
+}
+
+/* GOLD DIVIDER */
+
+.divider{
+    width:80%;
+    height:3px;
+    margin:40px auto 100px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        white,
+        var(--gold),
+        transparent
+    );
+
+    box-shadow:
+        0 0 15px var(--gold);
+}
+
+/* DASHBOARD */
+
+.registry{
+    max-width:900px;
+    margin:auto;
+    padding:120px 40px;
+}
+
+.registry h2{
+    text-align:center;
+    color:gold;
+    font-size:3rem;
+    margin-bottom:40px;
+    letter-spacing:4px;
+}
+
+.registry table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:1.6rem;
+}
+
+.registry th{
+    color:gold;
+    text-align:left;
+    padding:20px;
+    border-bottom:2px solid gold;
+}
+
+.registry td{
+    padding:20px;
+    border-bottom:1px solid rgba(255,215,0,.3);
+}
+
+.registry tr:hover{
+    background:rgba(255,215,0,.05);
+}
+
+/* ENVELOPE SECTION */
+
+.envelope-section{
+    min-height:120vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:150px 20px;
+}
+
+/* ENVELOPE */
+
+.envelope-wrapper{
+    position:relative;
+    width:500px;
+    height:420px;
+}
+
+/* Letter */
+
+.letter{
+    position:absolute;
+    left:50%;
+    bottom: 200px;
+
+    width:380px;
+    transform:
+        translateX(-50%)
+        translateY(200px);
+
+    z-index:1;
+}
+
+.letter img{
+    width:100%;
+    display:block;
+
+    border-radius:10px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5);
+}
+
+/* Envelope */
+
+.envelope{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:260px;
+    
+}
+
+/* Back */
+
+.back{
+    position:absolute;
+    inset:0;
+    background:url("Parchment.jpg");
+    border-radius:0;
+    z-index:0;
+}
+
+/* Front */
+
+.front{
+    position:absolute;
+    bottom:0;
+
+    width:100%;
+    height: 250px;
+
+    background:url("Parchment.jpg") center/cover no-repeat;
+
+    clip-path:
+    polygon(
+        0 0,
+        50% 60%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    z-index:2;
+}
+
+/* Flap */
+
+.flap{
+    position:absolute;
+    top:0;
+
+    width:100%;
+    height:160px;
+
+    background:url("Parchment.jpg");
+
+    clip-path:
+    polygon(
+        0 0,
+        50% 100%,
+        100% 0
+    );
+
+    transform-origin:top;
+
+    transition:
+        transform .8s ease,
+        opacity .3s ease;
+
+    z-index:3;
+}
+
+.flap.open{
+    transform:rotateX(180deg);
+    opacity:0;
+}
+
+/* Fade-in */
+
+.fade{
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:none;
+}
+
+/* Mobile */
+
+/* Mobile */
+
+@media(max-width:700px){
+
+    .section p{
+        font-size:1.4rem;
+    }
+
+    .envelope-wrapper{
+        width:340px;
+        height:340px;
+    }
+
+    .letter{
+        width:260px;
+    }
+
+}
+
+/* Letter rise animation */
+
+@keyframes rise {
+
+    from {
+        transform: translateX(-50%) translateY(220px);
+    }
+
+    to {
+        transform: translateX(-50%) translateY(-120px);
+    }
+
+}
+
+.letter.show {
+    animation: rise 2.5s ease forwards;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<section class="hero fade">
+
+    <h1>OFFICIAL DECREE</h1>
+
+    <h2>Thank You</h2>
+
+</section>
+
+<section class="section fade">
+
+    <p>
+
+        I AM CURRENTLY ENTERTAINING ONLY ONE BISH. THANK YOU FOR YOU HONEST ATTACHMENT. I APPRECIATE IT, But... (there are no buts😗)
+
+    </p>
+
+</section>
+
+<section class="footer-message fade">
+
+    <h2>Stay Strong, Pookie</h2>
+
+</section>
+
+<div class="divider"></div>
+
+<section class="registry fade">
+
+    <h2>Occupancy Registry</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Bow Woww</td>
+                <td>Occupied</td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</section>
+
+<section class="envelope-section">
+
+    <div class="envelope-wrapper">
+
+        <p class="click-hint">
+            Click to Open Official Document
+        </p>
+
+        <div class="letter">
+            <img src="certificate.png" alt="Certificate">
+        </div>
+
+        <div class="envelope">
+
+            <div class="back"></div>
+
+            <div class="flap"></div>
+
+            <div class="front"></div>
+
+            
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+
+const observer =
+new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add("show");
+
+}
+
+});
+
+},{
+threshold:0.15
+});
+
+document
+.querySelectorAll(".fade")
+.forEach(el=>observer.observe(el));
+
+const envelope =
+document.querySelector(".envelope-wrapper");
+
+const flap =
+document.querySelector(".flap");
+
+const letter =
+document.querySelector(".letter");
+
+let opened = false;
+
+envelope.addEventListener("click",()=>{
+
+    if(opened) return;
+
+    opened = true;
+
+    flap.classList.add("open");
+
+    setTimeout(()=>{
+
+        letter.classList.add("show");
+
+    },400);
+
+});
+
+
+</script>
+
+</body>
+</html>
